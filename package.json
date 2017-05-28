@@ -1,0 +1,29 @@
+{
+  "name": "aws-messaging",
+  "version": "0.1.0",
+  "description": "AWS messaging wrapper for multicasting published messages to consumer groups",
+  "main": "js/index.js",
+  "types": "js/index.d.ts",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheConnMan/aws-messaging.git"
+  },
+  "keywords": [
+    "AWS",
+    "SNS",
+    "SQS",
+    "messaging"
+  ],
+  "author": "TheConnMan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheConnMan/aws-messaging/issues"
+  },
+  "homepage": "https://github.com/TheConnMan/aws-messaging#readme",
+  "devDependencies": {
+    "typescript": "^2.3.3"
+  }
+}
