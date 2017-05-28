@@ -4,7 +4,13 @@ class Publisher {
 
   private registry: { [key:string]:string; } = {};
 
-  private snsClient: AWS.SNS = new AWS.SNS();
+  public snsClient: AWS.SNS;
+
+  constructor(region = 'us-east-1') {
+    this.snsClient = new AWS.SNS({
+      region
+    });
+  }
 
   public register(topic: string, clazz: string): void {
     this.registry[clazz] = topic;
@@ -17,7 +23,7 @@ class Publisher {
   public send(object: any): Promise<any> {
     var topic = this.getTopic(object);
     if (!topic) {
-      throw new Error('No topic found for ' + (object.constructor.name));
+      return Promise.reject('No topic found for ' + (object.constructor.name));
     }
     return new Promise((resolve, reject) => {
       this.snsClient.publish({
