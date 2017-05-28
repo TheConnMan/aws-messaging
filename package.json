@@ -25,5 +25,8 @@
   "homepage": "https://github.com/TheConnMan/aws-messaging#readme",
   "devDependencies": {
     "typescript": "^2.3.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.58.0"
   }
 }
