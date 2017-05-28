@@ -5,7 +5,8 @@
   "main": "js/index.js",
   "types": "js/index.d.ts",
   "scripts": {
-    "compile": "tsc -p tsconfig.json"
+    "compile": "tsc -p tsconfig.json",
+    "test": "nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -24,9 +25,29 @@
   },
   "homepage": "https://github.com/TheConnMan/aws-messaging#readme",
   "devDependencies": {
+    "@types/chai": "^3.5.2",
+    "@types/mocha": "^2.2.41",
+    "chai": "^4.0.0",
+    "mocha": "^3.4.2",
+    "nyc": "^10.3.2",
+    "ts-node": "^3.0.4",
     "typescript": "^2.3.3"
   },
   "dependencies": {
     "aws-sdk": "^2.58.0"
+  },
+  "nyc": {
+    "include": [
+      "ts/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }
