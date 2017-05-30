@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "description": "AWS messaging wrapper for multicasting published messages to consumer groups",
   "main": "js/index.js",
-  "types": "js/index.d.ts",
+  "typescript": {
+    "definition": "index.d.ts"
+  },
   "scripts": {
     "compile": "tsc -p tsconfig.json",
+    "preinstall": "npm install autodts",
+    "postinstall": "autodts link",
+    "prepublish": "tsc && autodts generate",
     "test": "nyc mocha"
   },
   "repository": {
@@ -25,6 +30,7 @@
   },
   "homepage": "https://github.com/TheConnMan/aws-messaging#readme",
   "devDependencies": {
+    "@lib/autodts-generator": "0.0.2",
     "@types/chai": "^3.5.2",
     "@types/mocha": "^2.2.41",
     "@types/sinon": "^2.2.2",
@@ -36,6 +42,7 @@
     "typescript": "^2.3.3"
   },
   "dependencies": {
+    "autodts": "0.0.6",
     "aws-sdk": "^2.58.0"
   },
   "nyc": {
