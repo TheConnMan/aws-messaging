@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import Consumer from '../../ts/consumer/Consumer';
 
-import * as chai from 'chai';
+import * as assert from 'assert';
 import * as sinon from 'sinon';
 
 describe('Consumer', () => {
@@ -26,7 +26,7 @@ describe('Consumer', () => {
     consumer.start();
     consumer.start().then(data => {
       sinon.assert.calledOnce(receiveStub);
-      chai.assert.equal('Already running', data);
+      assert.equal('Already running', data);
     }).then(done, done);
     consumer.stop();
   });

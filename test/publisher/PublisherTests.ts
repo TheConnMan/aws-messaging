@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import Publisher from '../../ts/publisher/Publisher';
 
-import * as chai from 'chai';
+import * as assert from 'assert';
 import * as sinon from 'sinon';
 
 describe('Publisher', () => {
@@ -11,9 +11,9 @@ describe('Publisher', () => {
 
     publisher.register('test-topic', 'Publisher');
 
-    chai.assert.equal('test-topic', publisher.getTopic(publisher));
+    assert.equal('test-topic', publisher.getTopic(publisher));
 
-    publisher.send(publisher).then((data) => chai.assert.equal('data', data)).catch(() => chai.assert.fail());
+    publisher.send(publisher).then((data) => assert.equal('data', data)).catch(() => assert.ok(false));
 
     sinon.assert.calledOnce(stub);
   });
@@ -22,9 +22,9 @@ describe('Publisher', () => {
     var publisher = new Publisher();
     var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
 
-    chai.assert.isUndefined(publisher.getTopic(publisher));
+    assert.ok(!publisher.getTopic(publisher));
 
-    publisher.send(publisher).then(() => chai.assert.fail()).catch(() => chai.assert.ok(true));
+    publisher.send(publisher).then(() => assert.ok(false)).catch(() => assert.ok(true));
 
     sinon.assert.notCalled(stub);
   });
@@ -35,7 +35,7 @@ describe('Publisher', () => {
 
     publisher.register('test-topic', 'Publisher');
 
-    publisher.send(publisher).then(() => chai.assert.fail()).catch((err) => chai.assert.equal('Error', err));
+    publisher.send(publisher).then(() => assert.ok(false)).catch((err) => assert.equal('Error', err));
 
     sinon.assert.calledOnce(stub);
   });
