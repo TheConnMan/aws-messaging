@@ -22,6 +22,10 @@ class Publisher {
 
   public send(object: any): Promise<any> {
     var topic = this.getTopic(object);
+    return this.sendToTopic(object, topic);
+  }
+
+  public sendToTopic(object: any, topic: string): Promise<any> {
     if (!topic) {
       return Promise.reject('No topic found for ' + (object.constructor.name));
     }
