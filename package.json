@@ -6,7 +6,8 @@
   "types": "js/index.d.ts",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
