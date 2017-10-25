@@ -1,12 +1,16 @@
 import * as AWS from 'aws-sdk';
 
-class Consumer {
+import {plainToClass} from 'class-transformer';
+
+class Consumer<T> {
 
   public sqsClient: AWS.SQS;
 
+  private clazz: new () => T;
   private active: boolean = false;
 
-  constructor(private queueUrl: string, private consumerFn: (item) => Promise<void>, region = 'us-east-1') {
+  constructor(private queueUrl: string, clazz: new () => T, private consumerFn: (item: T) => Promise<void>, region = 'us-east-1') {
+    this.clazz = clazz;
     this.sqsClient = new AWS.SQS({
       region
     });
@@ -61,8 +65,9 @@ class Consumer {
 
   private processMessage(message: AWS.SQS.Message): Promise<void> {
     var me = this;
-    var snsMessage = JSON.parse(message.Body);
-    return me.consumerFn(snsMessage).then(() => {
+    var snsMessage: Object = JSON.parse(JSON.parse(message.Body).Message);
+    var object: T = plainToClass(this.clazz, snsMessage);
+    return me.consumerFn(object).then(() => {
       return me.deleteMessage(message);
     })
   }

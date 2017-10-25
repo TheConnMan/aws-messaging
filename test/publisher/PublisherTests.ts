@@ -9,7 +9,7 @@ describe('Publisher', () => {
     var publisher = new Publisher();
     var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, null, 'data');
 
-    publisher.register('test-topic', 'Publisher');
+    publisher.register('test-topic', Publisher);
 
     assert.equal('test-topic', publisher.getTopic(publisher));
 
@@ -33,7 +33,7 @@ describe('Publisher', () => {
     var publisher = new Publisher();
     var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
 
-    publisher.register('test-topic', 'Publisher');
+    publisher.register('test-topic', Publisher);
 
     publisher.send(publisher).then(() => assert.ok(false)).catch((err) => assert.equal('Error', err));
 

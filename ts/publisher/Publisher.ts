@@ -12,8 +12,8 @@ class Publisher {
     });
   }
 
-  public register(topic: string, clazz: string): void {
-    this.registry[clazz] = topic;
+  public register(topic: string, clazz: new () => Object): void {
+    this.registry[clazz.name] = topic;
   }
 
   public getTopic(object: any): string {
