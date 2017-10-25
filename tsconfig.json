@@ -2,6 +2,8 @@
   "version": "2.3.3",
   "compilerOptions": {
     "target": "es6",
+    "mapRoot": "./js",
+    "sourceMap": true,
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": true,

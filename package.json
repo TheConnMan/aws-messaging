@@ -27,6 +27,7 @@
   "homepage": "https://github.com/TheConnMan/aws-messaging#readme",
   "devDependencies": {
     "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.47",
     "@types/sinon": "^2.2.2",
     "mocha": "^3.4.2",
     "nyc": "^10.3.2",
