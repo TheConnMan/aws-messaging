@@ -6,7 +6,8 @@
   "types": "js/index.d.ts",
   "scripts": {
     "compile": "tsc -p tsconfig.json",
-    "test": "nyc mocha",
+    "test-only": "nyc mocha",
+    "test": "npm run lint && npm run test-only",
     "lint": "tslint -p tslint.json",
     "prepublish": "tsc"
   },
