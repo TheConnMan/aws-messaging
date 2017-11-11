@@ -6,8 +6,8 @@ import * as sinon from 'sinon';
 
 describe('Publisher', () => {
   it('should register and get the topic for a class then publish a message', () => {
-    var publisher = new Publisher();
-    var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, null, 'data');
+    const publisher = new Publisher();
+    const stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, null, 'data');
 
     publisher.register('test-topic', Publisher);
 
@@ -19,8 +19,8 @@ describe('Publisher', () => {
   });
 
   it('should fail without a registered class', () => {
-    var publisher = new Publisher();
-    var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
+    const publisher = new Publisher();
+    const stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
 
     assert.ok(!publisher.getTopic(publisher));
 
@@ -30,8 +30,8 @@ describe('Publisher', () => {
   });
 
   it('should fail with an AWS error', () => {
-    var publisher = new Publisher();
-    var stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
+    const publisher = new Publisher();
+    const stub = sinon.stub(publisher.snsClient, 'publish').callsArgWithAsync(1, 'Error', null);
 
     publisher.register('test-topic', Publisher);
 
@@ -39,4 +39,4 @@ describe('Publisher', () => {
 
     sinon.assert.calledOnce(stub);
   });
-})
+});

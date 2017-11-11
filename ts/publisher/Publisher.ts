@@ -2,9 +2,9 @@ import * as AWS from 'aws-sdk';
 
 class Publisher {
 
-  private registry: { [key:string]:string; } = {};
-
   public snsClient: AWS.SNS;
+
+  private registry: { [key: string]: string; } = {};
 
   constructor(region = 'us-east-1') {
     this.snsClient = new AWS.SNS({
@@ -12,7 +12,7 @@ class Publisher {
     });
   }
 
-  public register(topic: string, clazz: new () => Object): void {
+  public register(topic: string, clazz: new () => object): void {
     this.registry[clazz.name] = topic;
   }
 
@@ -21,7 +21,7 @@ class Publisher {
   }
 
   public send(object: any): Promise<any> {
-    var topic = this.getTopic(object);
+    const topic = this.getTopic(object);
     return this.sendToTopic(object, topic);
   }
 
@@ -39,7 +39,7 @@ class Publisher {
         } else {
           resolve(data);
         }
-      })
+      });
     });
   }
 }
