@@ -6,8 +6,8 @@ import * as sinon from 'sinon';
 
 describe('Consumer', () => {
   it('should continue to run with empty results', () => {
-    var consumer = new Consumer('queue-url', Object, () => null);
-    var receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
+    const consumer = new Consumer('queue-url', Object, () => null);
+    const receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
       Messages: []
     });
 
@@ -18,13 +18,13 @@ describe('Consumer', () => {
   });
 
   it('should not be started a second time', (done) => {
-    var consumer = new Consumer('queue-url', Object, () => null);
-    var receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
+    const consumer = new Consumer('queue-url', Object, () => null);
+    const receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
       Messages: []
     });
 
     consumer.start();
-    consumer.start().then(data => {
+    consumer.start().then((data) => {
       sinon.assert.calledOnce(receiveStub);
       assert.equal('Already running', data);
     }).then(done, done);
@@ -32,17 +32,17 @@ describe('Consumer', () => {
   });
 
   it('should process with results', (done) => {
-    var consumerFnStub = sinon.stub().resolves();
-    var consumer = new Consumer('queue-url', Object, consumerFnStub);
+    const consumerFnStub = sinon.stub().resolves();
+    const consumer = new Consumer('queue-url', Object, consumerFnStub);
 
-    var receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
+    const receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
       Messages: [{
-        ReceiptHandle: "handle",
-        Body: "{\"Message\": \"{}\"}"
+        Body: '{"Message": "{}"}',
+        ReceiptHandle: 'handle'
       }]
     });
 
-    var deleteStub = sinon.stub(consumer.sqsClient, 'deleteMessage').callsArgWithAsync(1, null, 'data');
+    const deleteStub = sinon.stub(consumer.sqsClient, 'deleteMessage').callsArgWithAsync(1, null, 'data');
 
     consumer.start().then(() => {
       sinon.assert.calledOnce(receiveStub);
@@ -53,9 +53,9 @@ describe('Consumer', () => {
   });
 
   it('should continue with AWS get errors', (done) => {
-    var consumer = new Consumer('queue-url', Object, () => null);
+    const consumer = new Consumer('queue-url', Object, () => null);
 
-    var receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, 'Error', null);
+    const receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, 'Error', null);
 
     consumer.start().then(() => {
       sinon.assert.calledOnce(receiveStub);
@@ -64,17 +64,17 @@ describe('Consumer', () => {
   });
 
   it('should continue with AWS delete errors', (done) => {
-    var consumerFnStub = sinon.stub().resolves();
-    var consumer = new Consumer('queue-url', Object, consumerFnStub);
+    const consumerFnStub = sinon.stub().resolves();
+    const consumer = new Consumer('queue-url', Object, consumerFnStub);
 
-    var receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
+    const receiveStub = sinon.stub(consumer.sqsClient, 'receiveMessage').callsArgWithAsync(1, null, {
       Messages: [{
-        ReceiptHandle: "handle",
-        Body: "{\"Message\": \"{}\"}"
+        Body: '{"Message": "{}"}',
+        ReceiptHandle: 'handle'
       }]
     });
 
-    var deleteStub = sinon.stub(consumer.sqsClient, 'deleteMessage').callsArgWithAsync(1, 'Error', null);
+    const deleteStub = sinon.stub(consumer.sqsClient, 'deleteMessage').callsArgWithAsync(1, 'Error', null);
 
     consumer.start().then(() => {
       sinon.assert.calledOnce(receiveStub);
@@ -83,4 +83,4 @@ describe('Consumer', () => {
     }).then(done, done);
     consumer.stop();
   });
-})
+});
